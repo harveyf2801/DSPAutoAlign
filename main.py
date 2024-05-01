@@ -34,6 +34,24 @@ def bitcrush(arr, bits=16):
 AUDIO_PATH = Path(os.getcwd(), 'audio')
 os.makedirs(AUDIO_PATH, exist_ok=True)
 
+# Setting the loss function to use for polarity inversion detection
+LOSS = MultiResolutionSTFTLoss()
+
+# Metrics
+losses = {
+    'MR-STFT': LOSS,
+    'MSE': mse_loss
+}
+
+loudness = {
+    'RMS': db_rms,
+    'Peak': dB_peak
+}
+
+quality = {
+    'THDN': thdn
+}
+
 # Audio options for alignment comparison
 audio_options = {
     'sine': [Path(AUDIO_PATH, 'sine_target.wav'),
@@ -62,9 +80,6 @@ AUDIO_CHOICE = 'sine'
 # * DURATION of None means the whole audio file will be used
 SAMPLERATE = 44100
 DURATION = None
-
-# Setting the loss function to use for polarity inversion detection
-LOSS = MultiResolutionSTFTLoss()
 
 # Other flags
 PLOTTING = False
@@ -108,21 +123,6 @@ if __name__ == "__main__":
         sd.wait()
 
     if EVALUATION_METRICS:
-        losses = {
-            'MR-STFT': LOSS,
-            'MSE': mse_loss
-        }
-
-        loudness = {
-            'RMS': db_rms,
-            'Peak': dB_peak
-        }
-
-        quality = {
-            'THD': thdn
-        }
-
-        print()
 
         # Calculating the loss before and after alignment
         for key, value in losses.items():
