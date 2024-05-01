@@ -1,0 +1,41 @@
+no change     /applications/anaconda3/condabin/conda
+no change     /applications/anaconda3/bin/conda
+no change     /applications/anaconda3/bin/conda-env
+no change     /applications/anaconda3/bin/activate
+no change     /applications/anaconda3/bin/deactivate
+no change     /applications/anaconda3/etc/profile.d/conda.sh
+no change     /applications/anaconda3/etc/fish/conf.d/conda.fish
+no change     /applications/anaconda3/shell/condabin/Conda.psm1
+no change     /applications/anaconda3/shell/condabin/conda-hook.ps1
+no change     /applications/anaconda3/lib/python3.9/site-packages/xontrib/conda.xsh
+no change     /applications/anaconda3/etc/profile.d/conda.csh
+no change     /home/hf1/.bashrc
+No action taken.
+
+Method: cross_correlation
+MR-STFT 1.0784708396172544
+MSE 0.010138460482503789
+RMS -22.947462545782297
+Peak -1.7994519288920297
+THDN 79.1449028630653
+
+Method: phase_vocoder
+MR-STFT 2.075512733395339
+MSE 0.01571056416644013
+RMS -24.361096728099287
+Peak -3.142727482601629
+THDN 79.20504001747368
+
+Method: phase_difference_analysis
+MR-STFT 0.06250327300286979
+MSE 0.004938063730987214
+RMS -21.982177229553052
+Peak -0.8069088229427769
+THDN 79.13066104697373
+
+Method: cross_spectrum
+MR-STFT 3.163503810138902
+MSE 0.015776664826291423
+RMS -24.28063255535796
+Peak -3.8875725248331525
+THDN 79.13073159135578

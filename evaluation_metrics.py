@@ -21,6 +21,8 @@ def find_range(f, x):
     """
     Find range between nearest local minima from peak at index x
     """
+    lowermin = 0
+    uppermin = 0
     for i in np.arange(x+1, len(f)):
         if f[i+1] >= f[i]:
             uppermin = i
