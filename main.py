@@ -74,7 +74,7 @@ method_options = {
 }
 
 # Select the audio and alignment method to use
-METHOD_CHOICE = 'cross_correlation'
+METHOD_CHOICE = 'cross_spectrum'
 AUDIO_CHOICE = 'snare1'
 
 # Setting the audio constants
@@ -85,7 +85,7 @@ DURATION = None
 # Other flags
 PLOTTING = False
 PLAY_AUDIO = False
-EVALUATION_METRICS = True
+EVALUATION_METRICS = False
 OUTPUT_AUDIO = False
 
 
@@ -105,11 +105,12 @@ if __name__ == "__main__":
 
     # Applying the selected alignment method
     
-    start_time = time.time()
+    import timeit
+    n = 10
     filtered_sig = method_options[METHOD_CHOICE](ref.copy(), sig.copy())
-    end_time = time.time()
+    execution_time = timeit.timeit(stmt='method_options[METHOD_CHOICE](ref.copy(), sig.copy())',
+                                   globals=globals(), number=n)
 
-    execution_time = end_time - start_time
     print("Execution time:", execution_time, "seconds")
 
     # Creating mixes for the signals to listen to
