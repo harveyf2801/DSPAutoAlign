@@ -48,18 +48,18 @@ if __name__ == '__main__':
             filtered_sig = method(target_sig, input_sig)
             mix = (target_sig + filtered_sig) / 2
 
-            # for loss_key, loss in losses.items():
-            #     total_loss[loss_key] += float(loss(target_sig, filtered_sig))
-            # for loudness_key, loudness_func in loudness.items():
-            #     total_loudness[loudness_key] += loudness_func(mix)
+            for loss_key, loss in losses.items():
+                total_loss[loss_key] += float(loss(target_sig, filtered_sig))
+            for loudness_key, loudness_func in loudness.items():
+                total_loudness[loudness_key] += loudness_func(mix)
             for quality_key, quality_func in quality.items():
                 total_quality[quality_key] += quality_func(filtered_sig)
 
         print('\nMethod:', key)
-        # for loss_key, loss in total_loss.items():
-        #     print(loss_key, loss/dataset_length)
-        # for loudness_key, loudness_val in total_loudness.items():
-        #     print(loudness_key, loudness_val/dataset_length)
+        for loss_key, loss in total_loss.items():
+            print(loss_key, loss/dataset_length)
+        for loudness_key, loudness_val in total_loudness.items():
+            print(loudness_key, loudness_val/dataset_length)
         for quality_key, quality_val in total_quality.items():
             print(quality_key, quality_val/dataset_length)
 
