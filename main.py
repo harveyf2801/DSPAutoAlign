@@ -6,6 +6,7 @@ import sounddevice as sd
 import librosa
 from scipy.io import wavfile
 import os
+import time
 
 from losses import MultiResolutionSTFTLoss, MSELoss
 
@@ -74,7 +75,7 @@ method_options = {
 
 # Select the audio and alignment method to use
 METHOD_CHOICE = 'cross_correlation'
-AUDIO_CHOICE = 'sine'
+AUDIO_CHOICE = 'snare1'
 
 # Setting the audio constants
 # * DURATION of None means the whole audio file will be used
@@ -103,7 +104,13 @@ if __name__ == "__main__":
     print("The polarity of the signal", "needs" if invert_pol else "does not need", "to be inverted")
 
     # Applying the selected alignment method
+    
+    start_time = time.time()
     filtered_sig = method_options[METHOD_CHOICE](ref.copy(), sig.copy())
+    end_time = time.time()
+
+    execution_time = end_time - start_time
+    print("Execution time:", execution_time, "seconds")
 
     # Creating mixes for the signals to listen to
     mix1 = (sig + ref) / 2
