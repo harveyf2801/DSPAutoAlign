@@ -58,7 +58,7 @@ audio_options = {
     'sine': [Path(AUDIO_PATH, 'sine_target.wav'),
              Path(AUDIO_PATH, 'sine_input.wav')],
     'snare1': ["C:/Users/hfret/Downloads/SDDS/Gretsch_BigFatSnare_AKG_414_BTM_Segment_10_peak_0.066.wav",
-               "C:/Users/hfret/Downloads/SDDS/Gretsch_BigFatSnare_AKG_414_BTM_Segment_2_peak_0.051.wav"],
+               "C:/Users/hfret/Downloads/SDDS/Gretsch_BigFatSnare_AKG_414_TP_Segment_10_peak_0.048.wav"],
     'snare2': ["C:/Users/hfret/Downloads/SDDS/wooden15_BigFatSnare_Sennheiser_MD421_TP_Segment_7_peak_0.029.wav",
                "C:/Users/hfret/Downloads/SDDS/wooden15_BigFatSnare_Shure_SM57_BTM_Segment_7_peak_0.035.wav"],
     'snare3': ["C:/Users/hfret/Downloads/SDDS/YamahaMaple_BigFatSnare_Sennheiser_e614_TP_Segment_80_peak_0.163.wav",
@@ -74,7 +74,7 @@ method_options = {
 }
 
 # Select the audio and alignment method to use
-METHOD_CHOICE = 'cross_spectrum'
+METHOD_CHOICE = 'phase_vocoder'
 AUDIO_CHOICE = 'snare1'
 
 # Setting the audio constants
@@ -84,9 +84,10 @@ DURATION = None
 
 # Other flags
 PLOTTING = False
-PLAY_AUDIO = False
-EVALUATION_METRICS = False
+PLAY_AUDIO = True
+EVALUATION_METRICS = True
 OUTPUT_AUDIO = False
+EXPORT_FILTERED_AUDIO = False
 
 
 if __name__ == "__main__":
@@ -99,19 +100,13 @@ if __name__ == "__main__":
     sig /= np.max(np.abs(sig))
 
     # Check the polarity of the signals and invert if necessary
-    invert_pol = abs(float(LOSS(sig, ref))) > abs(float(LOSS(-sig, ref)))
-    if invert_pol: sig = -sig
-    print("The polarity of the signal", "needs" if invert_pol else "does not need", "to be inverted")
+    # invert_pol = abs(float(LOSS(sig, ref))) > abs(float(LOSS(-sig, ref)))
+    # if invert_pol: sig = -sig
+    # print("The polarity of the signal", "needs" if invert_pol else "does not need", "to be inverted")
 
     # Applying the selected alignment method
-    
-    import timeit
     n = 10
     filtered_sig = method_options[METHOD_CHOICE](ref.copy(), sig.copy())
-    execution_time = timeit.timeit(stmt='method_options[METHOD_CHOICE](ref.copy(), sig.copy())',
-                                   globals=globals(), number=n)
-
-    print("Execution time:", execution_time, "seconds")
 
     # Creating mixes for the signals to listen to
     mix1 = (sig + ref) / 2
@@ -166,3 +161,8 @@ if __name__ == "__main__":
         # Export mix2 as a wav file
         mix2_path = Path(AUDIO_PATH, f'{METHOD_CHOICE}_{AUDIO_CHOICE}.wav')
         wavfile.write(mix2_path, SAMPLERATE, scale(mix2))
+    
+    if EXPORT_FILTERED_AUDIO:
+        # Export the filtered signal as a wav file
+        filtered_sig_path = Path(AUDIO_PATH, f'{METHOD_CHOICE}_{AUDIO_CHOICE}_filtered.wav')
+        wavfile.write(filtered_sig_path, SAMPLERATE, scale(filtered_sig))

@@ -24,6 +24,14 @@ def phase_vocoder(ref, sig):
     mag_source, phase_source = librosa.magphase(stft_source)
     mag_reference, phase_reference = librosa.magphase(stft_reference)
 
+    # Get the absolute value of the magnitudes
+    mag_source = np.abs(mag_source)
+    mag_reference = np.abs(mag_reference)
+
+    # Get the radians of the phases
+    phase_source = np.angle(phase_source)
+    phase_reference = np.angle(phase_reference)
+
     # Calculate the phase difference
     phase_diff = phase_reference - phase_source
 
